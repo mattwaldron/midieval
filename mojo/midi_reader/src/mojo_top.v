@@ -6,7 +6,7 @@ module mojo_top(
     // cclk input from AVR, high when AVR is ready
     input cclk,
     // Outputs to the 8 onboard LEDs
-    output[7:0]led,
+    output reg [7:0] led,
     // AVR SPI connections
     output spi_miso,
     input spi_ss,
@@ -58,5 +58,9 @@ midi_byte_detect midi_detect (
     .midi_byte_out(midi_byte_from_detector),
     .byte_ready(midi_byte_ready)
 );
+
+always @(posedge midi_byte_ready) begin
+  led <= led + 1;
+end
 
 endmodule
